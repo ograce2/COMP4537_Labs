@@ -1,0 +1,14 @@
+.buttonDiv{
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.displayMessage{
+    font-size: 1em;
+    font-style: bold;
+}
+
+
+
