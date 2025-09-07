@@ -1,3 +1,22 @@
+// AI was used while creating this assignment.
+
+// Strings used in the program
+const BUTTON = "button";
+const INPUT = "input";
+const FORM = "form";
+const DIV = "div";
+const SUBMIT = "submit";
+const CLICK = "click";
+const PX = "px";
+const NUMBER = "number";
+const SPACING = "spacing";
+const LABEL = "label";
+const STATIC = "static";
+const ABSOLUTE = "absolute";
+const HEX_DIGITS = "0123456789ABCDEF";
+const SPACE = " ";
+const HASHTAG = "#";
+
 /**
  * The Game class manages the overall game state and logic. It creates the necessary
  * elements for the user to play the game, as well as methods to manage the flow of the
@@ -16,6 +35,26 @@ class Game{
     static MAX_NUM = 7;
 
     /**
+     * ID used for the input element.
+     */
+    static INPUT_ID = "gameInput";
+
+    /**
+     * ID used for the Go button.
+     */
+    static GO_BUTTON_ID = "goButton";
+
+    /**
+     * Width of scramble buttons.
+     */
+    static BUTTON_WIDTH = "10em";
+
+    /**
+     * Height of scramble buttons.
+     */
+    static BUTTON_HEIGHT = "5em";
+
+    /**
      * Creates a new Game instance. Initializes the buttons array, the input form, num,
      * nextButton, display, and buttonDiv attributes.
      */
@@ -24,9 +63,8 @@ class Game{
         this.num = 0;
         this.nextButton = 1;
         this.display = new Display();
-        this.inputID = "gameInput";
         this.buttonDiv = Display.getButtonDisplayDiv();
-        this.inputForm = new InputForm(Game.MIN_NUM, Game.MAX_NUM, "gameInput", "goButton", this.start.bind(this));
+        this.inputForm = new InputForm(Game.MIN_NUM, Game.MAX_NUM, Game.INPUT_ID, Game.GO_BUTTON_ID, this.start.bind(this));
         this.display.addElementToDiv(this.inputForm.getForm());
         document.body.appendChild(this.buttonDiv);
     }
@@ -49,8 +87,8 @@ class Game{
         this.buttons.forEach(button => {
             let height = button.btn.offsetHeight;
             let width = button.btn.offsetWidth; 
-            let left = this.display.getRandomLocationHorizontal(width) + "px";
-            let top = this.display.getRandomLocationVertical(height) + "px";
+            let left = this.display.getRandomLocationHorizontal(width) + PX;
+            let top = this.display.getRandomLocationVertical(height) + PX;
             button.setLocation(left, top);
         });
 
@@ -111,8 +149,8 @@ class Game{
      */
     initializeButtons(){
         for (let i = 0; i < this.num; i++){
-            let btn = new ScrambleButton(i + 1, "button" + (i + 1), Display.getRandomColour(), "10em", "5em");
-            btn.btn.addEventListener("click", this.checkUserGuess.bind(this));
+            let btn = new ScrambleButton(i + 1, BUTTON + (i + 1), Display.getRandomColour(), Game.BUTTON_WIDTH, Game.BUTTON_HEIGHT);
+            btn.btn.addEventListener(CLICK, this.checkUserGuess.bind(this));
             this.buttons.push(btn);
             this.buttonDiv.appendChild(btn.btn);
         }
@@ -142,7 +180,7 @@ class Game{
      */
     start(){
         this.resetGame();
-        this.num = document.getElementById(this.inputID).value;
+        this.num = document.getElementById(Game.INPUT_ID).value;
         this.initializeButtons();
         this.inputForm.disableFormSubmission();
         setTimeout(this.scrambleButtons.bind(this, this.num), this.num*1000);
@@ -163,8 +201,23 @@ class Game{
  * The InputForm class creates a form with a number input, label, and button for
  * the user to input a number between a specified minimum and maximum value.
  */
-class InputForm{
-    
+class InputForm{    
+
+    /**
+     * Color of Go button.
+     */
+    static GO_BUTTON_COLOUR = "lightblue";
+
+    /**
+     * Width of Go button.
+     */
+    static GO_BUTTON_WIDTH = "5em";
+
+    /**
+     * Height of Go button.
+     */
+    static GO_BUTTON_HEIGHT = "2em";
+
     /**
      * Creates a new InputForm instance with the specified parameters.
      * @param {*} minNum - the minimum number that can be inputted in the form
@@ -177,28 +230,28 @@ class InputForm{
 
         this.stepValue = 1;
 
-        this.form = document.createElement("form");
-        this.form.id = "inputForm";
+        this.form = document.createElement(FORM);
 
-        this.input = document.createElement("input");
-        this.input.type = "number";
+        this.input = document.createElement(INPUT);
+        this.input.type = NUMBER;
         this.input.min = minNum;
         this.input.max = maxNum;
         this.input.value = minNum;
         this.input.step = this.stepValue;
         this.input.id = inputId;
-        this.input.className = "spacing";
+        this.input.className = SPACING;
 
-        this.label = document.createElement("label");
+        this.label = document.createElement(LABEL);
         this.label.for = this.id;
-        this.label.innerHTML = "Enter a number between " + minNum + " and " + maxNum + ": ";
-        this.btn = new Button("Go", buttonID, "lightblue", "5em", "2em", buttonFunction);
+        this.label.innerHTML = GAME_PROMPT;
+        this.btn = new Button(GO_BUTTON, buttonID, InputForm.GO_BUTTON_COLOUR, InputForm.GO_BUTTON_WIDTH, 
+            InputForm.GO_BUTTON_HEIGHT, buttonFunction);
 
         this.form.appendChild(this.label);
         this.form.appendChild(this.input);
         this.form.appendChild(this.btn.btn);
 
-        this.form.addEventListener("submit", function(event){
+        this.form.addEventListener(SUBMIT, function(event){
             event.preventDefault();
             buttonFunction();
         });
@@ -239,15 +292,15 @@ class Button{
      * Creates a new Button instance with the specified parameters.
      * @param {*} text - the text to be displayed on the button
      * @param {*} id - the id of the button element
-     * @param {*} colur - the background color of the button
+     * @param {*} colour - the background color of the button
      * @param {*} width - the width of the button
      * @param {*} height - the height of the button
      */
-    constructor(text, id, colur, width, height){
-        this.btn = document.createElement("button");
+    constructor(text, id, colour, width, height){
+        this.btn = document.createElement(BUTTON);
         this.btn.innerHTML = text;
         this.btn.id = id;
-        this.btn.style.backgroundColor = colur;
+        this.btn.style.backgroundColor = colour;
         this.btn.style.width = width;
         this.btn.style.height = height; 
     }
@@ -292,7 +345,7 @@ class ScrambleButton extends Button{
      * Makes the button position static.
      */
     makeStatic(){
-        this.btn.style.position = "static";
+        this.btn.style.position = STATIC;
     }
 
     /**
@@ -315,7 +368,7 @@ class ScrambleButton extends Button{
      * @param {*} top 
      */
     setLocation(left, top){
-        this.btn.style.position = "absolute";
+        this.btn.style.position = ABSOLUTE;
         this.btn.style.left = left;
         this.btn.style.top = top;
     }
@@ -328,13 +381,17 @@ class ScrambleButton extends Button{
 class Display{
 
     /**
+     * Class name for buttonDiv element.
+     */
+    static BUTTON_DIV_CLASS = "buttonDiv";
+
+    /**
      * Creates a new Display element with a div for displaying items in. The div
      * is appended to the top of the body element.
      */
     constructor(){
-        this.div = document.createElement("div");
-        //this.div.id = "displayDiv";
-        this.div.className = "spacing";
+        this.div = document.createElement(DIV);
+        this.div.className = SPACING;
         document.body.appendChild(this.div);
     }
 
@@ -343,8 +400,8 @@ class Display{
      * @returns a div with the buttonDiv class
      */
     static getButtonDisplayDiv(){
-        let buttonDiv = document.createElement("div");
-        buttonDiv.className = "buttonDiv spacing";
+        let buttonDiv = document.createElement(DIV);
+        buttonDiv.className = Display.BUTTON_DIV_CLASS + SPACE + SPACING;
         return buttonDiv;
     }
 
@@ -353,10 +410,10 @@ class Display{
      * @returns a random hex colour string
      */
     static getRandomColour(){
-        const letters = '0123456789ABCDEF';
-        let colour = '#';
+        const letters = HEX_DIGITS;
+        let colour = HASHTAG;
         for (let i = 0; i < 6; i++) {
-            colour += letters[Math.floor(Math.random() * 16)];
+            colour += letters[Math.floor(Math.random() * HEX_DIGITS.length)];
         }
         return colour;
     }
