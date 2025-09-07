@@ -1,4 +1,6 @@
-// AI was used while creating this assignment.
+// AI was used while creating this assignment to debug issues while
+// displaying the buttons in a row, and generating random colours
+// for the buttons.
 
 // Strings used in the program
 const BUTTON = "button";
