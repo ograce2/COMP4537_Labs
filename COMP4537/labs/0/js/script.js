@@ -376,7 +376,7 @@ class ScrambleButton extends Button{
 
 /**
  * The Display class contains static methods for displaying elements on the screen, including
- * getting random colours, vertical locations, and horizontal locations, as well as setting button locations.
+ * getting random hex strings, vertical locations, and horizontal locations, as well as setting button locations.
  */
 class Display{
 
