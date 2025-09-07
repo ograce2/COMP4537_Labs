@@ -1,5 +1,4 @@
 .buttonDiv{
-    margin: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -10,5 +9,11 @@
     font-style: bold;
 }
 
+.spacing{
+    margin: 1em;
+    padding: 0.25em;
+}
 
-
+button:disabled{
+    color: black;
+}
