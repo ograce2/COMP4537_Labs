@@ -149,7 +149,7 @@ class Game{
      */
     initializeButtons(){
         for (let i = 0; i < this.num; i++){
-            let btn = new ScrambleButton(i + 1, BUTTON + (i + 1), Display.getRandomColour(), Game.BUTTON_WIDTH, Game.BUTTON_HEIGHT);
+            let btn = new ScrambleButton(i + 1, BUTTON + (i + 1), HASHTAG + Display.getRandomHexString(), Game.BUTTON_WIDTH, Game.BUTTON_HEIGHT);
             btn.btn.addEventListener(CLICK, this.checkUserGuess.bind(this));
             this.buttons.push(btn);
             this.buttonDiv.appendChild(btn.btn);
@@ -406,16 +406,16 @@ class Display{
     }
 
     /**
-     * Generates a random hex colour string.
-     * @returns a random hex colour string
+     * Generates a random 6-digit hex string.
+     * @returns a random hex string
      */
-    static getRandomColour(){
-        const letters = HEX_DIGITS;
-        let colour = HASHTAG;
+    static getRandomHexString(){
+        let hexString = "";
         for (let i = 0; i < 6; i++) {
-            colour += letters[Math.floor(Math.random() * HEX_DIGITS.length)];
+            let index = Math.floor(Math.random() * HEX_DIGITS.length);
+            hexString += HEX_DIGITS[index];
         }
-        return colour;
+        return hexString;
     }
 
     /**
