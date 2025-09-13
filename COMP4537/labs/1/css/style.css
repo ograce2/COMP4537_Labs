@@ -1,0 +1,62 @@
+h1, h2{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.remove-button{
+    background-color: salmon;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    margin: 1%;
+}
+
+.add-button{
+    background-color: lightgreen;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    margin: 2%;
+}
+
+.page-button{
+    background-color: lightslategray;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    margin: 2%;
+}
+
+.bottom-left{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.update-label{
+    float: right;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.note-text{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    width: 50%;
+    border-radius: 5px;
+    padding: 1%;
+    margin: 2%;
+    background-color: white;
+    field-sizing: content;
+}
+
+.note-display{
+    background-color: aliceblue;
+    padding: 1%;
+    border-radius: 5px;
+    overflow-y: scroll;
+    max-height: 70vh;
+}
+
+.note-container{
+    align-items: center;
+    display: flex;
+}
